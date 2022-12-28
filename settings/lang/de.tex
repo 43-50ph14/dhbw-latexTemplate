@@ -1,1 +1,44 @@
 % Deutsche Sprache wörter
+
+% Load language specific Strings
+\newcommand{\degreePhrase}{für die Prüfung zum}
+\newcommand{\lecturePhrase}{für die Vorlesung}
+\newcommand{\departmentPhrase}{des Studiengangs}
+\newcommand{\locationUniversityPhrase}{an der Dualen Hochschule Baden-Württemberg}
+\newcommand{\documentAuthorPhrase}{von}
+\newcommand{\documentPeriodPhrase}{Bearbeitungszeitraum}
+\newcommand{\matriculationNumberPhrase}{Matrikelnummer}
+\newcommand{\coursePhrase}{Kurs}
+\newcommand{\companyPhrase}{Ausbildungsbetrieb}%
+
+\newcommand{\tutorPhrase}{%
+	\IfStrEqCase{\documentType}{%
+		{T1000}{Betruer:in}%
+      	{T2000}{Betreuer:in}%
+      	{T3000}{Betreuer:in}%
+      	{BA}{Erstbetreuer:in}%
+        {stud}{Betruer:in}%
+        {PA}{Dozent:in}%
+	}[Gutachter]
+}
+
+\newcommand{\evaluatorPhrase}{Zweitbetreuer:in}
+\newcommand{\restrictionNoticesPhrase}{Sperrvermerk}
+\newcommand{\declarationPhrase}{Erklärung}
+\newcommand{\glossaryPhrase}{Glossar}
+\newcommand{\appendixPhrase}{Anhang}
+\newcommand{\listingPhrase}{Programmauszug}
+\newcommand{\listListingPhrase}{Programmauszugsverzeichnis}
+\newcommand{\authorListingPhrase}{Programmauszug}
+\newcommand{\acronymsPhrase}{Abkürzungsverzeichnis}
+
+\newcommand{\documentTypePhrase}{%
+  \IfStrEqCase{\documentType}{%
+      {T1000}{Projektarbeit - T1000}%
+      {T2000}{Projektarbeit - T2000}%
+      {T3000}{Projektarbeit - T3000}%
+      {BA}{Bachelorarbeit}%
+      {stud}{Studienarbeit}%
+      {PA}{Projektarbeit - modul}%
+  }[{\documentType\ignorespaces}]
+}

@@ -1,1 +1,263 @@
-% Header, Packages usw.
+%!TEX root = ../main.tex
+
+% show warning for old LaTeX syntax
+\RequirePackage[l2tabu, orthodox]{nag}
+
+\documentclass[
+	luatex,				% use lualatex
+	oneside,  			% oneside printing
+	12pt,			    % fontsize
+	parskip=half,		% Space (in lines) between paragraphs
+	headheight = 12pt,  % Header hight
+	headsepline,		% Line after header
+	footheight = 16pt,	% Footer height
+	footsepline,		% Line before footer
+	DIV=calc,		    % Calculate print space
+	BCOR=8mm,		    % BCOR settings (Bindekorrektur)
+	headinclude=false,  % Exclude header from print space
+	footinclude=false,	% Exclude footer from print space
+	listof=totoc,		% Show List of Figures/Tables in Contents
+	toc=bibliography,	% Show Bibliography in Contents
+]{scrreprt}	            % Koma-Script report-class
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MAIN SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Citation Styles
+\newcommand{\quoteStyle}{alphabetic-verb}
+
+% Fonts (options: palatino, goudysans, lmodern, libertine)
+\newcommand{\documentFont}{lmodern}
+
+% Margin
+\newcommand{\margin}{2.5cm}
+
+% Space between chapter headline and top of page
+\newcommand{\chapterMargin}{20pt}
+
+%% Table settings %%
+% Column spacing
+\newcommand{\tableColumnMargin}{10pt}
+%Line spacing
+\newcommand{\tableRowMargin}{1.5}
+
+% Color settings
+\newcommand{\linkColor}{00007A}
+\newcommand{\defineColors}{%
+	\definecolor{LinkColor}{HTML}{\linkColor}
+	\definecolor{ListingBackground}{HTML}{F8F8F8}
+}
+
+%% listings %%
+% Syntax Highlighting
+\newcommand{\listingsettings}{%
+	\lstset{%
+		language=Java,								% default language
+		numbers=left,								% position of line numbers (left, right)
+		stepnumber=1,								% set number to each line
+		numbersep=5pt,								% 5pt between number and source code
+		numberstyle=\tiny,							% letter size of numbers
+		breaklines=true,		        			% break lines if necessary (true, false)
+		breakautoindent=true,			        	% indenting after break line (true, false)
+		postbreak=\space,							% break line after space
+		tabsize=2,									% tabulator size
+		basicstyle=\ttfamily\footnotesize,		 	% font style
+		showspaces=false,							% show space (true, false)		showstringspaces=false,	% show space in strings (true, false)
+		extendedchars=true,							% show all Latin1 characters (true, false)
+		captionpos=b,								% sets the caption-position to bottom
+		backgroundcolor=\color{ListingBackground}, 	% source code background
+		xleftmargin=10pt,		        			% margin left
+		xrightmargin=5pt,		        			% margin right
+		frame=single,			        			% border settings
+		frameround=ffff,
+		rulecolor=\color{darkgray},					% border color
+		fillcolor=\color{ListingBackground},
+		aboveskip=20pt,
+		keywordstyle=\color[rgb]{0.133,0.133,0.6},
+		commentstyle=\color[rgb]{0.133,0.545,0.133},
+		stringstyle=\color[rgb]{0.627,0.126,0.941}
+	}
+}
+
+%% language, document type, multiple authors, documentype %%
+% iflang command definition
+\newcommand{\iflang}[2]{%
+  \IfStrEq{\documentLanguage}{#1}{#2}{}%
+}
+
+% ifDocType comand definition
+\newcommand{\ifDocType}[3]{%
+  \IfStrEq{\documentType}{#1}{#2}{#3}%
+}
+
+% ifMultipleAuthors definition
+\newcommand{\ifMultipleAuthors}[2]{%
+  \IfStrEq{\multipleAuthors}{true}{#1}{#2}%
+}
+
+% ifSpecialDocument definition
+\newcommand{\ifSpecialDocument}[2]{\IfStrEqCase{\documentType}{%
+	{T1000}{#2\ignorespaces}%
+	{T2000}{#2\ignorespaces}%
+	{T3000}{#2\ignorespaces}%
+	{stud}{#2\ignorespaces}%
+	{BA}{#2\ignorespaces}%
+	{PA}{#2\ignorespaces}%
+	}[#1\ignorespaces]%
+}
+
+
+%% Include document settings %%
+\input{settings/settings.tex}
+
+%% language stuff %%
+\input{settings/lang/de.tex}
+% Load language specific babel package
+\usepackage[english, ngerman]{babel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% INCLUDED PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% page layout
+\usepackage[margin=\margin,foot=1cm]{geometry}
+\usepackage{rotating}							% allow rotating of pages, figures
+\usepackage{lscape}								% landscape
+\usepackage{pdfpages}     
+\usepackage{float}
+\usepackage{array}                                                    
+
+%% fonts %%
+\usepackage[T1]{fontenc}						% font encoding
+\usepackage[activate]{microtype}                                         
+\usepackage[onehalfspacing]{setspace}
+\usepackage{\documentFont}
+\usepackage[%
+	pdftitle={\documentTitle},
+	pdfauthor={\documentAuthor},
+	pdfsubject={\documentType},
+	pdfcreator={lualatex, LaTeX with KOMA-Script},
+	pdfpagemode=UseOutlines,      				 % Show Contents while opening
+	pdfdisplaydoctitle=true, 					 % Show document title instead of file name
+	pdflang={\documentLanguage}, 				 % Document language
+]{hyperref}
+\usepackage[right]{eurosym}
+
+%% table %%
+\usepackage{longtable}
+
+%% images %%
+\usepackage{graphicx}
+\usepackage{wrapfig}						% allow wraped text around figures and tables
+
+%% math %%
+\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%% quotes %% 
+\usepackage[autostyle=true,german=quotes]{csquotes}
+
+% string manipulation
+\usepackage{xstring}
+
+%% indexing %%
+\usepackage{makeidx}
+\usepackage{enumitem}	
+
+%% color %%
+\usepackage{xcolor} 	
+
+% typesetting of footnotes                                                          
+\usepackage[perpage, hang, multiple, stable]{footmisc}  
+
+%% bookmarks, glossaries, acronyms, listings %%
+\usepackage[printonlyused]{acronym}                                 
+\usepackage{listings}
+\usepackage{bookmark}
+\usepackage[nonumberlist,toc]{glossaries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OTHER SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Generate glossary
+\makeglossaries{}
+
+% Load colors
+\defineColors{}
+
+% Set Titel, Autor and Date
+\title{\documentTitle}
+\author{\documentAuthor}
+\date{\datum}
+
+% PDF link settings
+\hypersetup{%
+	colorlinks=true, 		
+	linkcolor=LinkColor, 	
+	citecolor=LinkColor,
+	filecolor=LinkColor,
+	menucolor=LinkColor,
+	urlcolor=LinkColor,
+	linktocpage=true, 
+	bookmarksnumbered=true 
+}
+
+% Captions fontsize
+\addtokomafont{caption}{\small}
+
+% Bibliographie settings
+\iflang{de}{%
+\usepackage[
+	backend=biber,				% recommended. Alternative: bibtex
+	bibwarn=true,
+	bibencoding=utf8,	        % If .bib file is encoded with utf8, otherwise ascii
+	sortlocale=de_DE,
+	style=\quoteStyle,
+]{biblatex}
+}
+\iflang{en}{%
+\usepackage[
+	backend=biber,				% recommended. Alternative: bibtex
+	bibwarn=true,
+	bibencoding=utf8,        	% If .bib file is encoded with utf8, otherwise ascii
+	sortlocale=en_US,
+	style=\quoteStyle,
+]{biblatex}
+}
+
+\addbibresource{bibliographie.bib}
+
+% Hurenkinder und Schusterjungen verhindern
+\clubpenalty = 10000 			% schließt Schusterjungen aus (Seitenumbruch nach der ersten Zeile eines neuen Absatzes)
+\widowpenalty = 10000			% schließt Hurenkinder aus (die letzte Zeile eines Absatzes steht auf einer neuen Seite)
+\displaywidowpenalty=10000
+
+% Graphicspath
+\graphicspath{{content/images/}}
+
+\listingsettings{}
+% frequently used programing languages
+\lstloadlanguages{PHP,Python,Java,C,C++,bash}
+
+% Rename Listings
+\renewcommand\lstlistingname{\listingPhrase}
+\renewcommand\lstlistlistingname{\listListingPhrase}
+\def\lstlistingautorefname{\authorListingPhrase}
+
+% Spaces in tables
+\setlength{\tabcolsep}{\tableColumnMargin}
+\renewcommand{\arraystretch}{\tableRowMargin}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
